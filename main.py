@@ -1,17 +1,18 @@
 import time
 import random
 
+reviews = [
+
+]
+
 """
 todo:
-fix orderkidsmenu
+finish coding review option.
 do regular menu
-do regular menu with alcohol
-do regular menu ordering
-do reg menu + alcohol ordering
+reg menu ordering
+do regular menu with alcohol (if i have time)
 FAQ option
 job app option?
-need more ideas
-
 """
 def intro():
     print("💙 Welcome to Slingshot's Cafe! 💙")
@@ -27,7 +28,7 @@ def intro():
     mainmenu()
     
 def mainmenu():
-    print("1.) Order \n2.) placeholder \n3.) placeholder \n4.) placeholder \n5.) Exit")
+    print("1.) Order \n2.) placeholder \n3.) placeholder \n4.) Write a Review \n5.) Exit")
     main_menu_option = int(input(": "))
     if main_menu_option == 1:
         myage() 
@@ -42,7 +43,7 @@ def mainmenu():
     elif main_menu_option == 4:
         print("Loading...⟳")
         time.sleep(1)
-        print('placehold')
+        customer_reviews()
     else: 
         print("Loading...⟳")
         time.sleep(1)
@@ -123,26 +124,33 @@ def orderkidsmenu():
         print("Please choose your first side.")
         print("1.) Mashed Potatos \n2.) Vegetable Mix \n3.) Fruit \n4.) French Fries")
         sidechoice1 = int(input(": "))
-        #research how to do this part or redo codE
-        if sidechoice1 != 1 or 2 or 3 or 4: 
-            sidechoice1 = int(input("Please pick a valid number option. "))
-
-        print("Please choose your second side.")
-        sidechoice2 = int(input(": "))
-
-        if sidechoice2 != 1 or 2 or 3 or 4:
-            sidechoice2 = int(input("Please pick a valid number option. "))
-
-
-        print("Processing Order...⟳")
-        time.sleep(2)
-        print("Your order total will be * 10🪙*")
-        payment()
+        if sidechoice1 == 1 or 2 or 3 or 4: 
+            print("Please choose your second side.")
+            sidechoice2 = int(input(": "))
+            if sidechoice2 == 1 or 2 or 3 or 4:
+                   print("Processing Order...⟳")
+                   time.sleep(2)
+                   if mealchoice == 1:
+                       print("Your order total will be 8🪙!")
+                       payment()
+                   elif mealchoice == 2:
+                        print("Your order total will be 10🪙!")
+                        payment()
+                   elif mealchoice == 3:
+                       print("Your order total will be 5🪙!")
+                       payment() 
+                   
+            else:
+                sidechoice2 = int(input("Please choose a valid number option. \n: "))
+        else:
+            sidechoice1 = int(input("Please choose a valid number option. \n: "))
+            
     else:
         mealchoice = int(input("Please pick a valid number option. "))
 
 def payment():
     creditcardnumber = random.randint(100000000,999999999)
+    print('-'*25)
     print(f"Credit Card Number: {creditcardnumber}💳")
     userinput = int(input("Type in your Credit Card Number to finish Ordering! "))
     while userinput != creditcardnumber:
@@ -151,10 +159,12 @@ def payment():
         print(f"Credit Card Number: {creditcardnumber}💳")
         userinput = int(input("ERROR_-Invalid Number❌ Try Again. "))
     print("Processing...⟳ pleast wait.")
+    print('-'*15)
     ordernumber = random.randint(1000,9999)
     time.sleep(2)
     print(f"Transcastion Complete! \nYour Order Number is {ordernumber}🎫!")
-
+    time.sleep(1)
+    print("Thank you for supporting Slingshot's Cafe! Come Again")
 
 def regularmenu():
     print("regular menu")
@@ -168,8 +178,51 @@ def alcoholmenu():
 def orderalcoholmenu():
     print("What would you like to order?")
 
-#intro()
-orderkidsmenu()
+def customer_reviews():
+    print("Welcome to the Review Page of Slingshot's Cafe!")
+    print("-"*30)
+    print("Liked your food? Please Rate Us!")
+    time.sleep(3)
+    print("...If you didn't, please don't.")
+    time.sleep(2)
+    print('-'*15)
+    name = input("Who is reviewing?: ")
+    review = input("What would you like to say about your experience? ")
+    stars = int(input("How many stars would you rate? "))
+    newreview = Reviews(name,review,stars)
+    reviews.append(newreview.features())
+    print(f"Thank you for your review {name}!")
+    see_review = int(input("Would you like to see your review? \n1.) Yes \n2.) No \n: "))
+    if see_review == 1:
+        show_reviews()
+    elif see_review == 2:
+        print("main menu")
+    else:
+        see_review = int(input("Please pick a valid number option. : "))
+
+def show_reviews():
+    for review in reviews:
+        for key, value in review.items():
+            print(f"{key}: {value}")
+            
+    print("-"*30)
+    
+class Reviews:
+    def __init__(self,name,review,stars):
+        self.reviewid = random.randint(100,999)
+        self.name = name
+        self.review = review
+        self.stars = stars 
+    
+    def features(self):
+        newDictionary = {'Review Id': self.reviewid, 
+                         'Reviewer Name': self.name, 
+                         'Review': self.review, 
+                         'Stars': self.stars}
+        return newDictionary
+
+intro()
+
 
 
 
